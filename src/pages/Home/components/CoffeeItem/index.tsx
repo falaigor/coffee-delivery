@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
 import {
   Actions,
@@ -29,9 +29,6 @@ export function CoffeeItem({
   } = useContext(CartContext);
 
   const cartCoffee = cart.find((c) => c.coffeeId === id);
-
-  console.log(cart);
-  const [quantity, setQuantity] = useState(1);
 
   const pricing = value.toLocaleString("pt-br", { minimumFractionDigits: 2 });
 

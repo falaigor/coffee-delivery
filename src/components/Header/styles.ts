@@ -31,7 +31,27 @@ export const CheckoutButton = styled.a`
   border-radius: 6px;
   padding: 0.5rem;
 
-  svg {
-    color: ${(props) => props.theme["yellow-700"]};
+  color: ${(props) => props.theme["yellow-700"]};
+
+  transition: all 0.2s ease-in;
+  position: relative;
+
+  span {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    padding: 0.2rem 0.4rem;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 100px;
+
+    color: ${(props) => props.theme["white"]};
+    background-color: ${(props) => props.theme["yellow-700"]};
+  }
+
+  :hover {
+    color: ${(props) => props.theme["white"]};
+    background-color: ${(props) => props.theme["yellow-500"]};
   }
 `;

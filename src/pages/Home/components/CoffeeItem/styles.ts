@@ -92,6 +92,14 @@ export const QuantityAction = styled.div`
     padding: 0.2rem;
     border: 0;
     color: ${(props) => props.theme["purple-500"]};
+
+    cursor: pointer;
+
+    transition: all 0.2s ease-in;
+
+    :hover {
+      color: ${(props) => props.theme["purple-700"]};
+    }
   }
 `;
 
@@ -105,4 +113,12 @@ export const Checkout = styled.button`
   border: 0;
   border-radius: 6px;
   padding: 0.5rem;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease-in;
+
+  :hover {
+    background-color: ${(props) => props.theme["purple-500"]};
+  }
 `;
