@@ -1,11 +1,12 @@
 import { createContext, ReactNode, useState } from "react";
+import { coffees } from "../store/data";
 
-interface Coffees {
+export interface Coffee {
   id: string;
   title: string;
   description: string;
   tags: string[];
-  value: string;
+  value: number;
   image: string;
 }
 
@@ -16,7 +17,7 @@ interface CartItem {
 }
 
 interface CoffeesContextData {
-  coffees: Coffees[];
+  coffees: Coffee[];
 }
 
 export const CoffeesContext = createContext({} as CoffeesContextData);
@@ -26,8 +27,6 @@ interface CoffeesProviderProps {
 }
 
 export function CoffeesProvider({ children }: CoffeesProviderProps) {
-  const [coffees, setCoffees] = useState<Coffees[]>([]);
-
   return (
     <CoffeesContext.Provider value={{ coffees }}>
       {children}

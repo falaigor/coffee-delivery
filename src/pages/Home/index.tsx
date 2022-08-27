@@ -12,8 +12,14 @@ import { ShoppingCart, Timer, Package, Coffee } from "phosphor-react";
 
 import coffeeBannerUrl from "../../assets/coffee.png";
 import { CoffeeItem } from "./components/CoffeeItem";
+import { useContext } from "react";
+import { CoffeesContext } from "../../context/CoffeesContext";
 
 export function Home() {
+  const { coffees } = useContext(CoffeesContext);
+
+  console.log(coffees);
+
   return (
     <>
       <HeroContainer>
@@ -62,7 +68,9 @@ export function Home() {
         <h2>Nossos cafés</h2>
 
         <CoffeesList>
-          <CoffeeItem />
+          {coffees.map((coffee) => (
+            <CoffeeItem key={coffee.id} {...coffee} />
+          ))}
         </CoffeesList>
       </CoffeesContainer>
     </>

@@ -11,26 +11,28 @@ import {
   Tags,
 } from "./styles";
 
-import coffe from "../../../../assets/coffees/expresso.png";
+import { Coffee } from "../../../../context/CoffeesContext";
 
-export function CoffeeItem() {
+export function CoffeeItem({ title, description, tags, value, image }: Coffee) {
   const [quantity, setQuantity] = useState(0);
+
   return (
     <CoffeeItemContainer>
-      <img src={coffe} alt="" />
+      <img src={image} alt={description} />
       <Tags>
-        <Tag>Tradicional</Tag>
-        <Tag>Com leite</Tag>
+        {tags.map((t) => (
+          <Tag>{t}</Tag>
+        ))}
       </Tags>
 
       <div>
-        <h3>Expresso Tradicional</h3>
-        <p>O tradicional café feito com água quente e grãos moídos</p>
+        <h3>{title}</h3>
+        <p>{description}</p>
       </div>
 
       <BuyInfo>
         <Pricing>
-          R$ <span>9,90</span>
+          R$ <span>{value}</span>
         </Pricing>
 
         <Actions>
