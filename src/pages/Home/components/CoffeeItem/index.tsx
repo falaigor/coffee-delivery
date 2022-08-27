@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
 import {
   Actions,
@@ -11,8 +11,26 @@ import {
   Tags,
 } from "./styles";
 import { Coffee } from "../../../../store/data";
+import { CartContext } from "../../../../context/CartContext";
 
-export function CoffeeItem({ title, description, tags, value, image }: Coffee) {
+export function CoffeeItem({
+  id,
+  title,
+  description,
+  tags,
+  value,
+  image,
+}: Coffee) {
+  const {
+    cart,
+    addItemToCart,
+    increaseCoffeeQuantityByOne,
+    decreaseCoffeeQuantityByOne,
+  } = useContext(CartContext);
+
+  const cartCoffee = cart.find((c) => c.coffeeId === id);
+
+  console.log(cart);
   const [quantity, setQuantity] = useState(1);
 
   const pricing = value.toLocaleString("pt-br", { minimumFractionDigits: 2 });
@@ -38,16 +56,16 @@ export function CoffeeItem({ title, description, tags, value, image }: Coffee) {
 
         <Actions>
           <QuantityAction>
-            <button onClick={() => setQuantity(quantity - 1)}>
+            <button onClick={() => decreaseCoffeeQuantityByOne(id)}>
               <Minus weight="bold" />
             </button>
-            <span>{quantity}</span>
-            <button onClick={() => setQuantity(quantity + 1)}>
+            <span>{cartCoffee?.quantity ?? 1}</span>
+            <button onClick={() => increaseCoffeeQuantityByOne(id)}>
               <Plus weight="bold" />
             </button>
           </QuantityAction>
 
-          <Checkout>
+          <Checkout onClick={() => addItemToCart(id)}>
             <ShoppingCart weight="fill" size={22} />
           </Checkout>
         </Actions>
