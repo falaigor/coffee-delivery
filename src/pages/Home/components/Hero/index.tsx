@@ -21,12 +21,14 @@ export function Hero() {
             </span>
             Compra simples e segura
           </Icon>
+
           <Icon color="gray">
             <span>
               <Package size={16} weight="fill" />
             </span>
             Entrega rápida e rastreada
           </Icon>
+
           <Icon color="yellow">
             <span>
               <Timer size={16} weight="fill" />
