@@ -10,18 +10,19 @@ import {
   Tag,
   Tags,
 } from "./styles";
-
-import { Coffee } from "../../../../context/CoffeesContext";
+import { Coffee } from "../../../../store/data";
 
 export function CoffeeItem({ title, description, tags, value, image }: Coffee) {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+
+  const pricing = value.toLocaleString("pt-br", { minimumFractionDigits: 2 });
 
   return (
     <CoffeeItemContainer>
       <img src={image} alt={description} />
       <Tags>
         {tags.map((t) => (
-          <Tag>{t}</Tag>
+          <Tag key={t}>{t}</Tag>
         ))}
       </Tags>
 
@@ -32,7 +33,7 @@ export function CoffeeItem({ title, description, tags, value, image }: Coffee) {
 
       <BuyInfo>
         <Pricing>
-          R$ <span>{value}</span>
+          R$ <span>{pricing}</span>
         </Pricing>
 
         <Actions>

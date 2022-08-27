@@ -8,18 +8,18 @@ import {
   Wrapper,
 } from "./styles";
 
-import { ShoppingCart, Timer, Package, Coffee } from "phosphor-react";
+import {
+  ShoppingCart,
+  Timer,
+  Package,
+  Coffee as CoffeeIcon,
+} from "phosphor-react";
 
 import coffeeBannerUrl from "../../assets/coffee.png";
 import { CoffeeItem } from "./components/CoffeeItem";
-import { useContext } from "react";
-import { CoffeesContext } from "../../context/CoffeesContext";
+import { coffees, Coffee } from "../../store/data";
 
 export function Home() {
-  const { coffees } = useContext(CoffeesContext);
-
-  console.log(coffees);
-
   return (
     <>
       <HeroContainer>
@@ -55,7 +55,7 @@ export function Home() {
 
             <Icon color="purple">
               <span>
-                <Coffee size={16} weight="fill" />
+                <CoffeeIcon size={16} weight="fill" />
               </span>
               O café chega fresquinho até você
             </Icon>
@@ -68,7 +68,7 @@ export function Home() {
         <h2>Nossos cafés</h2>
 
         <CoffeesList>
-          {coffees.map((coffee) => (
+          {coffees.map((coffee: Coffee) => (
             <CoffeeItem key={coffee.id} {...coffee} />
           ))}
         </CoffeesList>

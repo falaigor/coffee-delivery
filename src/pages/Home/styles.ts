@@ -87,7 +87,7 @@ export const CoffeesContainer = styled.section`
 export const CoffeesList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1.2rem;
+  gap: 2rem 1.2rem;
   justify-content: flex-start;
 
   margin-top: 2rem;
