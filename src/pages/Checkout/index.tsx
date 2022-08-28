@@ -1,59 +1,52 @@
-import { Bank, CreditCard, CurrencyDollar, Money } from "phosphor-react";
-import { Label, PaymentMethods } from "./styles";
-import {
-  Billing,
-  CheckoutContainer,
-  Order,
-  DeliveryAddress,
-  Payment,
-} from "./styles";
+import { Payment } from "./components/Payment";
+import { DeliveryAddress } from "./components/DeliveryAddress";
+
+import { Billing, CheckoutContainer, Order } from "./styles";
+import { FormProvider, useForm } from "react-hook-form";
+
+interface NewOrderFormData {
+  cep: string;
+  address: string;
+  number: number;
+  complement?: string;
+  district: string;
+  city: string;
+  uf: string;
+  paymentMethod: string;
+  subTotal: number;
+  delivery: number;
+  total: number;
+}
 
 export function Checkout() {
+  const newOrder = useForm<NewOrderFormData>({
+    defaultValues: {
+      cep: "",
+      address: "",
+      complement: "",
+      district: "",
+      city: "",
+      uf: "",
+      paymentMethod: "",
+      subTotal: 0,
+      delivery: 3.5,
+      total: 0,
+    },
+  });
+
   return (
     <CheckoutContainer>
-      <Billing>
-        <h3>Complete seu pedido</h3>
+      <FormProvider {...newOrder}>
+        <Billing>
+          <h3>Complete seu pedido</h3>
+          <DeliveryAddress />
+          <Payment />
+        </Billing>
 
-        <DeliveryAddress>
-          <Label>
-            <CurrencyDollar size={22} />
-            <div>
-              <p className="title">Endereço de Entrega</p>
-              <p className="description">
-                Informe o endereço onde deseja receber seu pedido
-              </p>
-            </div>
-          </Label>
-        </DeliveryAddress>
-
-        <Payment>
-          <Label>
-            <CurrencyDollar size={22} />
-            <div>
-              <p className="title">Pagamento</p>
-              <p className="description">
-                O pagamento é feito na entrega. Escolha a forma que deseja pagar
-              </p>
-            </div>
-          </Label>
-
-          <PaymentMethods>
-            <button className="active">
-              <CreditCard size={16} /> Cartão de Crédito
-            </button>
-            <button>
-              <Bank size={16} /> Cartão de Débito
-            </button>
-            <button>
-              <Money size={16} /> Dinheiro
-            </button>
-          </PaymentMethods>
-        </Payment>
-      </Billing>
-
-      <Order>
-        <h3>Cafés selecionados</h3>
-      </Order>
+        <Order>
+          <h3>Cafés selecionados</h3>
+        </Order>
+      </FormProvider>
     </CheckoutContainer>
   );
 }
