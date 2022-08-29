@@ -1,8 +1,18 @@
 import { Payment } from "./components/Payment";
 import { DeliveryAddress } from "./components/DeliveryAddress";
 
-import { Billing, CheckoutContainer, Order } from "./styles";
+import {
+  Actions,
+  Billing,
+  CartListItem,
+  CheckoutContainer,
+  Order,
+  QuantityAction,
+  Remove,
+  ResumeContainer,
+} from "./styles";
 import { FormProvider, useForm } from "react-hook-form";
+import { Minus, Plus, Trash } from "phosphor-react";
 
 interface NewOrderFormData {
   cep: string;
@@ -17,6 +27,8 @@ interface NewOrderFormData {
   delivery: number;
   total: number;
 }
+
+import expresso from "../../assets/coffees/expresso.png";
 
 export function Checkout() {
   const newOrder = useForm<NewOrderFormData>({
@@ -43,9 +55,37 @@ export function Checkout() {
           <Payment />
         </Billing>
 
-        <Order>
+        <ResumeContainer>
           <h3>Cafés selecionados</h3>
-        </Order>
+          <Order>
+            <CartListItem>
+              <img src={expresso} alt="" />
+              <div>
+                <p>Expresso tradicional</p>
+                <Actions>
+                  <QuantityAction>
+                    <button onClick={() => console.log("decrement")}>
+                      <Minus weight="bold" />
+                    </button>
+                    <span>1</span>
+                    <button onClick={() => console.log("increment")}>
+                      <Plus weight="bold" />
+                    </button>
+                  </QuantityAction>
+
+                  <Remove onClick={() => console.log("remove")}>
+                    <Trash size={22} /> Remover
+                  </Remove>
+                </Actions>
+              </div>
+              <p>
+                <strong>R$ 9,90</strong>
+              </p>
+            </CartListItem>
+
+            <hr />
+          </Order>
+        </ResumeContainer>
       </FormProvider>
     </CheckoutContainer>
   );
