@@ -97,7 +97,6 @@ export const coffees = [
     value: 3.45,
     image: HotChocolatte,
   },
-
   {
     id: "bc32fd94-b97a-45d4-8b27-df327bc8e55c",
     title: "Cubano",
@@ -107,7 +106,6 @@ export const coffees = [
     value: 7.56,
     image: Cubano,
   },
-
   {
     id: "7a6d7711-006c-4ce7-9fef-06e7723f3ac2",
     title: "Havaiano",
@@ -116,7 +114,6 @@ export const coffees = [
     value: 12.65,
     image: Havaiano,
   },
-
   {
     id: "e4c57b48-4814-46f9-9bb6-2c18c023a3db",
     title: "Árabe",

@@ -27,6 +27,18 @@ export const Form = styled.form`
     border: 1px solid ${(props) => props.theme["base-button"]};
     background-color: ${(props) => props.theme["base-input"]};
 
+    &.full {
+      width: 100%;
+    }
+
+    &.small {
+      width: 10%;
+    }
+
+    &.mid {
+      width: 50%;
+    }
+
     :focus {
       border: 1px solid ${(props) => props.theme["yellow-700"]};
     }

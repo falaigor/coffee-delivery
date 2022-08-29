@@ -22,6 +22,7 @@ export function DeliveryAddress() {
         <input id="cep" type="text" placeholder="CEP" {...register("cep")} />
         <input
           id="address"
+          className="full"
           type="text"
           placeholder="Rua"
           {...register("address")}
@@ -34,6 +35,7 @@ export function DeliveryAddress() {
         />
         <input
           id="complement"
+          className="mid"
           type="text"
           placeholder="Complemento"
           {...register("complement")}
@@ -47,6 +49,7 @@ export function DeliveryAddress() {
         <input
           id="city"
           type="text"
+          className="mid"
           placeholder="Cidade"
           {...register("city")}
         />
@@ -55,6 +58,7 @@ export function DeliveryAddress() {
           type="text"
           maxLength={2}
           placeholder="UF"
+          className="small"
           {...register("uf")}
         />
       </Form>
