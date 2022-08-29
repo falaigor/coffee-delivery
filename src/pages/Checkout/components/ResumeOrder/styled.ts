@@ -41,36 +41,6 @@ export const Actions = styled.div`
   gap: 0.4rem;
 `;
 
-export const QuantityAction = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  padding: 0.5rem;
-
-  background-color: ${(props) => props.theme["base-button"]};
-  gap: 0.2rem;
-
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: ${(props) => props.theme["base-button"]};
-
-    padding: 0.2rem;
-    border: 0;
-    color: ${(props) => props.theme["purple-500"]};
-
-    cursor: pointer;
-
-    transition: all 0.2s ease-in;
-
-    :hover {
-      color: ${(props) => props.theme["purple-700"]};
-    }
-  }
-`;
-
 export const Remove = styled.button`
   display: flex;
   align-items: center;
@@ -92,42 +62,5 @@ export const Remove = styled.button`
 
   :hover {
     background-color: ${(props) => props.theme["purple-500"]};
-  }
-`;
-
-export const ConfirmOrder = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-
-  div {
-    display: flex;
-    justify-content: space-between;
-
-    &.total {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-  }
-
-  button {
-    border: 0;
-    border-radius: 6px;
-    padding: 0.8rem;
-
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-
-    cursor: pointer;
-
-    color: ${(props) => props.theme["white"]};
-    background-color: ${(props) => props.theme["yellow-500"]};
-
-    transition: all 0.2s ease-in;
-
-    :hover {
-      background-color: ${(props) => props.theme["yellow-700"]};
-    }
   }
 `;
