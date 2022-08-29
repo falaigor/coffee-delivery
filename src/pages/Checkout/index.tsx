@@ -58,32 +58,63 @@ export function Checkout() {
         <ResumeContainer>
           <h3>Cafés selecionados</h3>
           <Order>
-            <CartListItem>
-              <img src={expresso} alt="" />
-              <div>
-                <p>Expresso tradicional</p>
-                <Actions>
-                  <QuantityAction>
-                    <button onClick={() => console.log("decrement")}>
-                      <Minus weight="bold" />
-                    </button>
-                    <span>1</span>
-                    <button onClick={() => console.log("increment")}>
-                      <Plus weight="bold" />
-                    </button>
-                  </QuantityAction>
+            <div>
+              <CartListItem>
+                <img src={expresso} alt="" />
+                <div>
+                  <p>Expresso tradicional</p>
+                  <Actions>
+                    <QuantityAction>
+                      <button onClick={() => console.log("decrement")}>
+                        <Minus weight="bold" />
+                      </button>
+                      <span>1</span>
+                      <button onClick={() => console.log("increment")}>
+                        <Plus weight="bold" />
+                      </button>
+                    </QuantityAction>
 
-                  <Remove onClick={() => console.log("remove")}>
-                    <Trash size={22} /> Remover
-                  </Remove>
-                </Actions>
-              </div>
-              <p>
-                <strong>R$ 9,90</strong>
-              </p>
-            </CartListItem>
+                    <Remove onClick={() => console.log("remove")}>
+                      <Trash size={22} /> Remover
+                    </Remove>
+                  </Actions>
+                </div>
+                <p>
+                  <strong>R$ 9,90</strong>
+                </p>
+              </CartListItem>
 
-            <hr />
+              <hr />
+            </div>
+
+            <div>
+              <CartListItem>
+                <img src={expresso} alt="" />
+                <div>
+                  <p>Expresso tradicional</p>
+                  <Actions>
+                    <QuantityAction>
+                      <button onClick={() => console.log("decrement")}>
+                        <Minus weight="bold" />
+                      </button>
+                      <span>1</span>
+                      <button onClick={() => console.log("increment")}>
+                        <Plus weight="bold" />
+                      </button>
+                    </QuantityAction>
+
+                    <Remove onClick={() => console.log("remove")}>
+                      <Trash size={22} /> Remover
+                    </Remove>
+                  </Actions>
+                </div>
+                <p>
+                  <strong>R$ 9,90</strong>
+                </p>
+              </CartListItem>
+
+              <hr />
+            </div>
           </Order>
         </ResumeContainer>
       </FormProvider>

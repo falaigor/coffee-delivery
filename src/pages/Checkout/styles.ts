@@ -50,9 +50,9 @@ export const Order = styled.div`
   background-color: ${(props) => props.theme["base-card"]};
   padding: 2.5rem;
   border-radius: 6px 2.75rem;
-  gap: 2rem;
 
   hr {
+    margin: 2rem 0;
     border: 1px solid ${(props) => props.theme["base-button"]};
   }
 `;
