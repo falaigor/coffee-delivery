@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useReducer, useState } from "react";
+import { cartReducer } from "../reducer/reducer";
 import { coffees } from "../store/data";
 
 export type CartItem = {
@@ -23,74 +24,125 @@ interface CartProviderProps {
   children: ReactNode;
 }
 
+interface CartState {
+  cart: CartItem[];
+}
+
 export function CartProvider({ children }: CartProviderProps) {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const localStorageName = "@coffee-delivery:cart";
+
+  const [cartState, dispatch] = useReducer(
+    (state: CartState, action: any) => {
+      switch (action.type) {
+        case "ADD_ITEM_TO_CART":
+          return {
+            ...state,
+            cart: [...state.cart, action.payload.newCartItem],
+          };
+
+        case "INCREMENT_QUANTITY_ITEM_CART":
+          return {
+            ...state,
+            cart: state.cart.map((item) => {
+              if (item.coffeeId === action.payload.coffeeId) {
+                if (item.quantity === 5) {
+                  return item;
+                }
+
+                const quantity = item.quantity + 1;
+                const totalPrice = item.unityPrice * quantity;
+
+                return {
+                  ...item,
+                  quantity,
+                  totalPrice,
+                };
+              } else {
+                return item;
+              }
+            }),
+          };
+
+        case "DECREMENT_QUANTITY_ITEM_CART":
+          return {
+            ...state,
+            cart: state.cart.map((item) => {
+              if (item.coffeeId === action.payload.coffeeId) {
+                if (item.quantity === 1) {
+                  return item;
+                }
+
+                const quantity = item.quantity - 1;
+                const totalPrice = item.unityPrice * quantity;
+
+                return {
+                  ...item,
+                  quantity,
+                  totalPrice,
+                };
+              } else {
+                return item;
+              }
+            }),
+          };
+
+        default:
+          return state;
+      }
+    },
+    {
+      cart: [],
+    }
+  );
+
+  const { cart } = cartState;
 
   function checkHasProductInCart(id: string) {
     const coffee = cart.find((item) => item.coffeeId === id);
     return coffee;
   }
 
+  function addItemToCartAction(id: string) {
+    const coffeePrice = coffees.find((coffee) => coffee.id === id)?.value;
+
+    const newCartItem = {
+      id: `item-${id}-${Date.now()}`,
+      quantity: 1,
+      coffeeId: id,
+      unityPrice: coffeePrice ?? 0,
+      totalPrice: coffeePrice ?? 0,
+    };
+
+    dispatch({
+      type: "ADD_ITEM_TO_CART",
+      payload: {
+        newCartItem,
+      },
+    });
+  }
+
   function increaseCoffeeQuantityByOne(id: string) {
     const existsInCart = checkHasProductInCart(id);
 
     if (!!existsInCart === false) {
-      const coffeePrice = coffees.find((coffee) => coffee.id === id)?.value;
-
-      setCart((state) => [
-        ...state,
-        {
-          id: `item-${id}-${Date.now()}`,
-          quantity: 1,
-          coffeeId: id,
-          unityPrice: coffeePrice ?? 0,
-          totalPrice: coffeePrice ?? 0,
-        },
-      ]);
+      addItemToCartAction(id);
     } else {
-      const updatedCart = cart.map((cart) => {
-        if (cart.coffeeId === id) {
-          if (cart.quantity === 5) {
-            return cart;
-          }
-
-          const quantity = cart.quantity + 1;
-          const totalPrice = cart.unityPrice * quantity;
-          return {
-            ...cart,
-            quantity,
-            totalPrice,
-          };
-        }
-
-        return cart;
+      dispatch({
+        type: "INCREMENT_QUANTITY_ITEM_CART",
+        payload: {
+          coffeeId: id,
+        },
       });
-
-      setCart(updatedCart);
     }
   }
 
   function decreaseCoffeeQuantityByOne(id: string) {
-    const updatedCart = cart.map((coffee) => {
-      if (coffee.coffeeId === id) {
-        if (coffee.quantity === 1) {
-          return coffee;
-        }
-
-        const quantity = coffee.quantity - 1;
-        const totalPrice = coffee.unityPrice * quantity;
-
-        return {
-          ...coffee,
-          quantity,
-          totalPrice,
-        };
-      }
-
-      return coffee;
+    dispatch({
+      type: "DECREMENT_QUANTITY_ITEM_CART",
+      payload: {
+        coffeeId: id,
+      },
     });
-
-    setCart(updatedCart);
   }
 
   function addItemToCart(id: string) {
@@ -100,18 +152,7 @@ export function CartProvider({ children }: CartProviderProps) {
       return increaseCoffeeQuantityByOne(id);
     }
 
-    const coffeePrice = coffees.find((coffee) => coffee.id === id)?.value;
-
-    setCart((state) => [
-      ...state,
-      {
-        id: `item-${id}-${Date.now()}`,
-        quantity: 1,
-        coffeeId: id,
-        unityPrice: coffeePrice ?? 0,
-        totalPrice: coffeePrice ?? 0,
-      },
-    ]);
+    addItemToCartAction(id);
   }
 
   return (
