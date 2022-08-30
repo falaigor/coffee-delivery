@@ -6,7 +6,7 @@ import { coffees } from "../../../../store/data";
 import { Actions, CartListItem, Remove } from "./styles";
 
 export function CartItem() {
-  const { cart } = useContext(CartContext);
+  const { cart, removeItemCart } = useContext(CartContext);
 
   return (
     <div>
@@ -26,7 +26,7 @@ export function CartItem() {
                 <Actions>
                   <QuantityButton itemId={coffee?.id} />
 
-                  <Remove onClick={() => console.log("remove")}>
+                  <Remove onClick={() => removeItemCart(coffee?.id)}>
                     <Trash size={22} /> Remover
                   </Remove>
                 </Actions>

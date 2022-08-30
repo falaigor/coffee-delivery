@@ -26,7 +26,7 @@ export function cartReducer(state: CartState, action: any) {
           return cart.coffeeId === action.payload.coffeeId;
         });
 
-        if (state.cart[currentCartItem].quantity === 5) {
+        if (currentCartItem < 0 || state.cart[currentCartItem].quantity === 5) {
           return state;
         }
 
@@ -43,7 +43,7 @@ export function cartReducer(state: CartState, action: any) {
           return cart.coffeeId === action.payload.coffeeId;
         });
 
-        if (state.cart[currentCartItem].quantity === 1) {
+        if (currentCartItem < 0 || state.cart[currentCartItem].quantity === 1) {
           return state;
         }
 
@@ -52,6 +52,15 @@ export function cartReducer(state: CartState, action: any) {
 
         draft.cart[currentCartItem].quantity = quantity;
         draft.cart[currentCartItem].totalPrice = totalPrice;
+      });
+
+    case ActionTypes.REMOVE_ITEM_CART:
+      return produce(state, (draft) => {
+        const cartItems = state.cart.filter(
+          (item) => item.coffeeId !== action.payload.coffeeId
+        );
+
+        draft.cart = cartItems;
       });
 
     default:

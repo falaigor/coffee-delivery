@@ -4,6 +4,7 @@ import {
   addItemToCartAction,
   decrementItemQuantityByOneAction,
   incrementItemQuantityByOneAction,
+  removeItemCartAction,
 } from "../reducer/actions";
 import { coffees } from "../store/data";
 
@@ -13,6 +14,7 @@ type CartContextData = {
   addItemToCart: (id: string) => void;
   increaseCoffeeQuantityByOne: (id: string | undefined) => void;
   decreaseCoffeeQuantityByOne: (id: string | undefined) => void;
+  removeItemCart: (id: string | undefined) => void;
 };
 
 export const CartContext = createContext({} as CartContextData);
@@ -59,6 +61,10 @@ export function CartProvider({ children }: CartProviderProps) {
     dispatch(decrementItemQuantityByOneAction(id));
   }
 
+  function removeItemCart(id: string | undefined) {
+    dispatch(removeItemCartAction(id));
+  }
+
   function addItemToCart(id: string) {
     const coffee = checkHasProductInCart(id);
     const coffeePrice = coffees.find((coffee) => coffee.id === id)?.value;
@@ -83,6 +89,7 @@ export function CartProvider({ children }: CartProviderProps) {
       value={{
         cart,
         addItemToCart,
+        removeItemCart,
         increaseCoffeeQuantityByOne,
         decreaseCoffeeQuantityByOne,
       }}
