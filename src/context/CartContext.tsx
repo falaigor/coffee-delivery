@@ -1,5 +1,10 @@
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 import { CartItem, cartReducer } from "../reducer/reducer";
+import {
+  addItemToCartAction,
+  decrementItemQuantityByOneAction,
+  incrementItemQuantityByOneAction,
+} from "../reducer/actions";
 import { coffees } from "../store/data";
 
 type CartContextData = {
@@ -46,8 +51,21 @@ export function CartProvider({ children }: CartProviderProps) {
     return coffee;
   }
 
-  function addItemToCartAction(id: string) {
+  function increaseCoffeeQuantityByOne(id: string) {
+    dispatch(incrementItemQuantityByOneAction(id));
+  }
+
+  function decreaseCoffeeQuantityByOne(id: string) {
+    dispatch(decrementItemQuantityByOneAction(id));
+  }
+
+  function addItemToCart(id: string) {
+    const coffee = checkHasProductInCart(id);
     const coffeePrice = coffees.find((coffee) => coffee.id === id)?.value;
+
+    if (coffee) {
+      return increaseCoffeeQuantityByOne(id);
+    }
 
     const newCartItem = {
       id: `item-${id}-${Date.now()}`,
@@ -57,46 +75,7 @@ export function CartProvider({ children }: CartProviderProps) {
       totalPrice: coffeePrice ?? 0,
     };
 
-    dispatch({
-      type: "ADD_ITEM_TO_CART",
-      payload: {
-        newCartItem,
-      },
-    });
-  }
-
-  function increaseCoffeeQuantityByOne(id: string) {
-    const existsInCart = checkHasProductInCart(id);
-
-    if (!!existsInCart === false) {
-      addItemToCartAction(id);
-    } else {
-      dispatch({
-        type: "INCREMENT_QUANTITY_ITEM_CART",
-        payload: {
-          coffeeId: id,
-        },
-      });
-    }
-  }
-
-  function decreaseCoffeeQuantityByOne(id: string) {
-    dispatch({
-      type: "DECREMENT_QUANTITY_ITEM_CART",
-      payload: {
-        coffeeId: id,
-      },
-    });
-  }
-
-  function addItemToCart(id: string) {
-    const coffee = checkHasProductInCart(id);
-
-    if (coffee) {
-      return increaseCoffeeQuantityByOne(id);
-    }
-
-    addItemToCartAction(id);
+    dispatch(addItemToCartAction(newCartItem));
   }
 
   return (
