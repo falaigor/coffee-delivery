@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import { ActionTypes } from "./actions";
 
 export type CartItem = {
@@ -15,56 +16,43 @@ interface CartState {
 export function cartReducer(state: CartState, action: any) {
   switch (action.type) {
     case ActionTypes.ADD_ITEM_TO_CART:
-      return {
-        ...state,
-        cart: [...state.cart, action.payload.newCartItem],
-      };
+      return produce(state, (draft) => {
+        draft.cart.push(action.payload.newCartItem);
+      });
 
     case ActionTypes.INCREMENT_ITEM_QUANTITY_BY_ONE:
-      return {
-        ...state,
-        cart: state.cart.map((item) => {
-          if (item.coffeeId === action.payload.coffeeId) {
-            if (item.quantity === 5) {
-              return item;
-            }
+      return produce(state, (draft) => {
+        const currentCartItem = state.cart.findIndex((cart) => {
+          return cart.coffeeId === action.payload.coffeeId;
+        });
 
-            const quantity = item.quantity + 1;
-            const totalPrice = item.unityPrice * quantity;
+        if (currentCartItem < 0) {
+          return state;
+        }
 
-            return {
-              ...item,
-              quantity,
-              totalPrice,
-            };
-          } else {
-            return item;
-          }
-        }),
-      };
+        const quantity = draft.cart[currentCartItem].quantity + 1;
+        const totalPrice = draft.cart[currentCartItem].unityPrice * quantity;
+
+        draft.cart[currentCartItem].quantity = quantity;
+        draft.cart[currentCartItem].totalPrice = totalPrice;
+      });
 
     case ActionTypes.DECREMENT_ITEM_QUANTITY_BY_ONE:
-      return {
-        ...state,
-        cart: state.cart.map((item) => {
-          if (item.coffeeId === action.payload.coffeeId) {
-            if (item.quantity === 1) {
-              return item;
-            }
+      return produce(state, (draft) => {
+        const currentCartItem = state.cart.findIndex((cart) => {
+          return cart.coffeeId === action.payload.coffeeId;
+        });
 
-            const quantity = item.quantity - 1;
-            const totalPrice = item.unityPrice * quantity;
+        if (currentCartItem < 0) {
+          return state;
+        }
 
-            return {
-              ...item,
-              quantity,
-              totalPrice,
-            };
-          } else {
-            return item;
-          }
-        }),
-      };
+        const quantity = draft.cart[currentCartItem].quantity - 1;
+        const totalPrice = draft.cart[currentCartItem].unityPrice * quantity;
+
+        draft.cart[currentCartItem].quantity = quantity;
+        draft.cart[currentCartItem].totalPrice = totalPrice;
+      });
 
     default:
       return state;
