@@ -10,10 +10,12 @@ export function Header() {
 
   return (
     <HeaderContainer>
-      <img
-        src={logoUrl}
-        alt="Icone de uma caneca de café com o escrito 'Coffe Delivery'"
-      />
+      <a href="/">
+        <img
+          src={logoUrl}
+          alt="Icone de uma caneca de café com o escrito 'Coffe Delivery'"
+        />
+      </a>
 
       <div>
         <Location>
