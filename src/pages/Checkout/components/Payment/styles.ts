@@ -21,7 +21,7 @@ export const PaymentMethods = styled.div`
 
   gap: 0.8rem;
 
-  button {
+  label {
     width: 100%;
     max-width: 11rem;
 
@@ -35,15 +35,24 @@ export const PaymentMethods = styled.div`
 
     font-size: 0.7rem;
 
-    gap: 0.8rem;
     cursor: pointer;
 
     color: ${(props) => props.theme["base-text"]};
     background-color: ${(props) => props.theme["base-button"]};
 
+    svg {
+      margin-right: 0.8rem;
+    }
+
     &.active {
       border: 1px solid ${(props) => props.theme["purple-500"]};
       background-color: ${(props) => props.theme["purple-100"]};
+    }
+
+    input {
+      width: 0;
+      height: 0;
+      opacity: 0;
     }
   }
 `;

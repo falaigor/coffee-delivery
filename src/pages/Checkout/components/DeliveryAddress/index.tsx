@@ -31,7 +31,7 @@ export function DeliveryAddress() {
           id="number"
           type="text"
           placeholder="Número"
-          {...register("number")}
+          {...register("number", { valueAsNumber: true })}
         />
         <input
           id="complement"
@@ -59,7 +59,7 @@ export function DeliveryAddress() {
           maxLength={2}
           placeholder="UF"
           className="small"
-          {...register("uf")}
+          {...register("uf", { maxLength: 2 })}
         />
       </Form>
     </DeliveryAddressContainer>

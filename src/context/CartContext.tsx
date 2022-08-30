@@ -1,15 +1,31 @@
+import { v4 as uuidv4 } from "uuid";
+
 import { createContext, ReactNode, useEffect, useReducer } from "react";
-import { CartItem, cartReducer } from "../reducer/reducer";
+import { CartItem, cartReducer, OrderData } from "../reducer/reducer";
 import {
   addItemToCartAction,
   decrementItemQuantityByOneAction,
   incrementItemQuantityByOneAction,
   removeItemCartAction,
+  resetCartAction,
+  createOrderAction,
 } from "../reducer/actions";
 import { coffees } from "../store/data";
 
+export interface CreateNewOrderData {
+  cep: string;
+  address: string;
+  number: number;
+  complement?: string;
+  district: string;
+  city: string;
+  uf: string;
+  paymentMethod: string;
+}
+
 type CartContextData = {
   cart: CartItem[];
+  order: OrderData;
   subTotal: number;
   delivery: number;
   total: number;
@@ -17,6 +33,7 @@ type CartContextData = {
   increaseCoffeeQuantityByOne: (id: string | undefined) => void;
   decreaseCoffeeQuantityByOne: (id: string | undefined) => void;
   removeItemCart: (id: string | undefined) => void;
+  createNewOrder: (data: CreateNewOrderData) => void;
 };
 
 export const CartContext = createContext({} as CartContextData);
@@ -32,6 +49,7 @@ export function CartProvider({ children }: CartProviderProps) {
     cartReducer,
     {
       cart: [],
+      order: {},
     },
     () => {
       const storedStateAsJSON = localStorage.getItem(localStorageName);
@@ -42,7 +60,7 @@ export function CartProvider({ children }: CartProviderProps) {
     }
   );
 
-  const { cart } = cartState;
+  const { cart, order } = cartState;
 
   const delivery = 3.5;
   const subTotal = cart.reduce(
@@ -56,6 +74,27 @@ export function CartProvider({ children }: CartProviderProps) {
 
     localStorage.setItem(localStorageName, stateJson);
   }, [cartState]);
+
+  function createNewOrder(data: CreateNewOrderData) {
+    const id = uuidv4();
+
+    const newOrder: OrderData = {
+      id,
+      cep: data.cep,
+      address: data.address,
+      number: data.number,
+      complement: data.complement,
+      district: data.district,
+      city: data.city,
+      uf: data.uf,
+      paymentMethod: data.paymentMethod,
+    };
+
+    console.log(newOrder);
+
+    dispatch(createOrderAction(newOrder));
+    dispatch(resetCartAction());
+  }
 
   function checkHasProductInCart(id: string) {
     const coffee = cart.find((item) => item.coffeeId === id);
@@ -97,11 +136,13 @@ export function CartProvider({ children }: CartProviderProps) {
     <CartContext.Provider
       value={{
         cart,
+        order,
         addItemToCart,
         removeItemCart,
         subTotal,
         delivery,
         total,
+        createNewOrder,
         increaseCoffeeQuantityByOne,
         decreaseCoffeeQuantityByOne,
       }}

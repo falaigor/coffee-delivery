@@ -13,7 +13,7 @@ export const DeliveryAddressContainer = styled.div`
   }
 `;
 
-export const Form = styled.form`
+export const Form = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;

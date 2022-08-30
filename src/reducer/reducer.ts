@@ -9,8 +9,21 @@ export type CartItem = {
   totalPrice: number;
 };
 
+export interface OrderData {
+  id: string;
+  cep: string;
+  address: string;
+  number: number;
+  complement?: string;
+  district: string;
+  city: string;
+  uf: string;
+  paymentMethod: string;
+}
+
 interface CartState {
   cart: CartItem[];
+  order: OrderData;
 }
 
 export function cartReducer(state: CartState, action: any) {
@@ -61,6 +74,17 @@ export function cartReducer(state: CartState, action: any) {
         );
 
         draft.cart = cartItems;
+      });
+
+    case ActionTypes.RESET_CART:
+      return produce(state, (draft) => {
+        draft.cart = [];
+      });
+
+    case ActionTypes.CREATE_ORDER:
+      return produce(state, (draft) => {
+        console.log(state);
+        draft.order = action.payload.newOrder;
       });
 
     default:

@@ -37,7 +37,7 @@ export function ConfirmOrder() {
         </p>
       </div>
 
-      <button>Confrimar Pedido</button>
+      <button type="submit">Confrimar Pedido</button>
     </ConfirmOrderContainer>
   );
 }

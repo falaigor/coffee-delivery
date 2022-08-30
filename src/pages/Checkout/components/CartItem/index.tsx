@@ -26,7 +26,10 @@ export function CartItem() {
                 <Actions>
                   <QuantityButton itemId={coffee?.id} />
 
-                  <Remove onClick={() => removeItemCart(coffee?.id)}>
+                  <Remove
+                    type="button"
+                    onClick={() => removeItemCart(coffee?.id)}
+                  >
                     <Trash size={22} /> Remover
                   </Remove>
                 </Actions>

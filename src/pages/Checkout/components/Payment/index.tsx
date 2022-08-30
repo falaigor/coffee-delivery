@@ -1,8 +1,12 @@
 import { Bank, CreditCard, CurrencyDollar, Money } from "phosphor-react";
+import { useFormContext } from "react-hook-form";
 import { Label } from "../../styles";
 import { PaymentContainer, PaymentMethods } from "./styles";
 
 export function Payment() {
+  const { register, watch } = useFormContext();
+  const payment = watch("paymentMethod");
+
   return (
     <PaymentContainer>
       <Label>
@@ -16,15 +20,38 @@ export function Payment() {
       </Label>
 
       <PaymentMethods>
-        <button className="active">
+        <label className={payment === "Cartão de Crédito" ? "active" : ""}>
           <CreditCard size={16} /> Cartão de Crédito
-        </button>
-        <button>
+          <input
+            id="payment"
+            className="full"
+            type="radio"
+            value="Cartão de Crédito"
+            {...register("paymentMethod")}
+          />
+        </label>
+
+        <label className={payment === "Cartão de Débito" ? "active" : ""}>
           <Bank size={16} /> Cartão de Débito
-        </button>
-        <button>
+          <input
+            id="payment"
+            className="full"
+            type="radio"
+            value="Cartão de Débito"
+            {...register("paymentMethod")}
+          />
+        </label>
+
+        <label className={payment === "Dinheiro" ? "active" : ""}>
           <Money size={16} /> Dinheiro
-        </button>
+          <input
+            id="payment"
+            className="full"
+            type="radio"
+            value="Dinheiro"
+            {...register("paymentMethod")}
+          />
+        </label>
       </PaymentMethods>
     </PaymentContainer>
   );

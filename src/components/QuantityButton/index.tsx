@@ -15,11 +15,11 @@ export function QuantityButton({ itemId }: QuantityButtonProps) {
 
   return (
     <QuantityButtonContainer>
-      <button onClick={() => decreaseCoffeeQuantityByOne(itemId)}>
+      <button type="button" onClick={() => decreaseCoffeeQuantityByOne(itemId)}>
         <Minus weight="bold" />
       </button>
       <span>{cartCoffee?.quantity ?? 0}</span>
-      <button onClick={() => increaseCoffeeQuantityByOne(itemId)}>
+      <button type="button" onClick={() => increaseCoffeeQuantityByOne(itemId)}>
         <Plus weight="bold" />
       </button>
     </QuantityButtonContainer>
