@@ -1,14 +1,6 @@
-import { createContext, ReactNode, useReducer, useState } from "react";
-import { cartReducer } from "../reducer/reducer";
+import { createContext, ReactNode, useEffect, useReducer } from "react";
+import { CartItem, cartReducer } from "../reducer/reducer";
 import { coffees } from "../store/data";
-
-export type CartItem = {
-  id: string;
-  coffeeId: string;
-  quantity: number;
-  unityPrice: number;
-  totalPrice: number;
-};
 
 type CartContextData = {
   cart: CartItem[];
@@ -24,78 +16,30 @@ interface CartProviderProps {
   children: ReactNode;
 }
 
-interface CartState {
-  cart: CartItem[];
-}
-
 export function CartProvider({ children }: CartProviderProps) {
   const localStorageName = "@coffee-delivery:cart";
 
   const [cartState, dispatch] = useReducer(
-    (state: CartState, action: any) => {
-      switch (action.type) {
-        case "ADD_ITEM_TO_CART":
-          return {
-            ...state,
-            cart: [...state.cart, action.payload.newCartItem],
-          };
-
-        case "INCREMENT_QUANTITY_ITEM_CART":
-          return {
-            ...state,
-            cart: state.cart.map((item) => {
-              if (item.coffeeId === action.payload.coffeeId) {
-                if (item.quantity === 5) {
-                  return item;
-                }
-
-                const quantity = item.quantity + 1;
-                const totalPrice = item.unityPrice * quantity;
-
-                return {
-                  ...item,
-                  quantity,
-                  totalPrice,
-                };
-              } else {
-                return item;
-              }
-            }),
-          };
-
-        case "DECREMENT_QUANTITY_ITEM_CART":
-          return {
-            ...state,
-            cart: state.cart.map((item) => {
-              if (item.coffeeId === action.payload.coffeeId) {
-                if (item.quantity === 1) {
-                  return item;
-                }
-
-                const quantity = item.quantity - 1;
-                const totalPrice = item.unityPrice * quantity;
-
-                return {
-                  ...item,
-                  quantity,
-                  totalPrice,
-                };
-              } else {
-                return item;
-              }
-            }),
-          };
-
-        default:
-          return state;
-      }
-    },
+    cartReducer,
     {
       cart: [],
+    },
+    () => {
+      const storedStateAsJSON = localStorage.getItem(localStorageName);
+
+      if (storedStateAsJSON) {
+        return JSON.parse(storedStateAsJSON);
+      }
     }
   );
 
   const { cart } = cartState;
+
+  useEffect(() => {
+    const stateJson = JSON.stringify(cartState);
+
+    localStorage.setItem(localStorageName, stateJson);
+  }, [cartState]);
 
   function checkHasProductInCart(id: string) {
     const coffee = cart.find((item) => item.coffeeId === id);
