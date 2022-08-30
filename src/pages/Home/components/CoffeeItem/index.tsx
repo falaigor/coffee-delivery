@@ -1,12 +1,11 @@
 import { useContext } from "react";
-import { Minus, Plus, ShoppingCart } from "phosphor-react";
+import { ShoppingCart } from "phosphor-react";
 import {
   Actions,
   BuyInfo,
   Checkout,
   CoffeeItemContainer,
   Pricing,
-  QuantityAction,
   Tag,
   Tags,
 } from "./styles";
@@ -22,14 +21,7 @@ export function CoffeeItem({
   value,
   image,
 }: Coffee) {
-  const {
-    cart,
-    addItemToCart,
-    increaseCoffeeQuantityByOne,
-    decreaseCoffeeQuantityByOne,
-  } = useContext(CartContext);
-
-  const cartCoffee = cart.find((c) => c.coffeeId === id);
+  const { addItemToCart } = useContext(CartContext);
 
   const pricing = value.toLocaleString("pt-br", { minimumFractionDigits: 2 });
 

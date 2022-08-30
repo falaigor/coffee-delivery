@@ -10,7 +10,9 @@ import { coffees } from "../store/data";
 
 type CartContextData = {
   cart: CartItem[];
-
+  subTotal: number;
+  delivery: number;
+  total: number;
   addItemToCart: (id: string) => void;
   increaseCoffeeQuantityByOne: (id: string | undefined) => void;
   decreaseCoffeeQuantityByOne: (id: string | undefined) => void;
@@ -41,6 +43,13 @@ export function CartProvider({ children }: CartProviderProps) {
   );
 
   const { cart } = cartState;
+
+  const delivery = 3.5;
+  const subTotal = cart.reduce(
+    (previousValue, currentValue) => previousValue + currentValue.totalPrice,
+    0
+  );
+  const total = subTotal + delivery;
 
   useEffect(() => {
     const stateJson = JSON.stringify(cartState);
@@ -90,6 +99,9 @@ export function CartProvider({ children }: CartProviderProps) {
         cart,
         addItemToCart,
         removeItemCart,
+        subTotal,
+        delivery,
+        total,
         increaseCoffeeQuantityByOne,
         decreaseCoffeeQuantityByOne,
       }}
