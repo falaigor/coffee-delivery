@@ -40,6 +40,6 @@ export const Remove = styled.button`
   }
 
   :hover {
-    background-color: ${(props) => props.theme["purple-500"]};
+    background-color: ${(props) => props.theme["purple-100"]};
   }
 `;

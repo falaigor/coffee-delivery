@@ -26,7 +26,7 @@ export function cartReducer(state: CartState, action: any) {
           return cart.coffeeId === action.payload.coffeeId;
         });
 
-        if (currentCartItem < 0) {
+        if (state.cart[currentCartItem].quantity === 5) {
           return state;
         }
 
@@ -43,7 +43,7 @@ export function cartReducer(state: CartState, action: any) {
           return cart.coffeeId === action.payload.coffeeId;
         });
 
-        if (currentCartItem < 0) {
+        if (state.cart[currentCartItem].quantity === 1) {
           return state;
         }
 
