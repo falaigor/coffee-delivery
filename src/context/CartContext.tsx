@@ -11,8 +11,8 @@ type CartContextData = {
   cart: CartItem[];
 
   addItemToCart: (id: string) => void;
-  increaseCoffeeQuantityByOne: (id: string) => void;
-  decreaseCoffeeQuantityByOne: (id: string) => void;
+  increaseCoffeeQuantityByOne: (id: string | undefined) => void;
+  decreaseCoffeeQuantityByOne: (id: string | undefined) => void;
 };
 
 export const CartContext = createContext({} as CartContextData);
@@ -51,11 +51,11 @@ export function CartProvider({ children }: CartProviderProps) {
     return coffee;
   }
 
-  function increaseCoffeeQuantityByOne(id: string) {
+  function increaseCoffeeQuantityByOne(id: string | undefined) {
     dispatch(incrementItemQuantityByOneAction(id));
   }
 
-  function decreaseCoffeeQuantityByOne(id: string) {
+  function decreaseCoffeeQuantityByOne(id: string | undefined) {
     dispatch(decrementItemQuantityByOneAction(id));
   }
 

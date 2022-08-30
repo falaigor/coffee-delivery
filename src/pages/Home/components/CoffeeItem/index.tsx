@@ -12,6 +12,7 @@ import {
 } from "./styles";
 import { Coffee } from "../../../../store/data";
 import { CartContext } from "../../../../context/CartContext";
+import { QuantityButton } from "../../../../components/QuantityButton";
 
 export function CoffeeItem({
   id,
@@ -52,15 +53,7 @@ export function CoffeeItem({
         </Pricing>
 
         <Actions>
-          <QuantityAction>
-            <button onClick={() => decreaseCoffeeQuantityByOne(id)}>
-              <Minus weight="bold" />
-            </button>
-            <span>{cartCoffee?.quantity ?? 1}</span>
-            <button onClick={() => increaseCoffeeQuantityByOne(id)}>
-              <Plus weight="bold" />
-            </button>
-          </QuantityAction>
+          <QuantityButton itemId={id} />
 
           <Checkout onClick={() => addItemToCart(id)}>
             <ShoppingCart weight="fill" size={22} />

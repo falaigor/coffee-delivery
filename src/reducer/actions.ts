@@ -15,7 +15,7 @@ export function addItemToCartAction(newCartItem: CartItem) {
   };
 }
 
-export function incrementItemQuantityByOneAction(id: string) {
+export function incrementItemQuantityByOneAction(id: string | undefined) {
   return {
     type: ActionTypes.INCREMENT_ITEM_QUANTITY_BY_ONE,
     payload: {
@@ -24,7 +24,7 @@ export function incrementItemQuantityByOneAction(id: string) {
   };
 }
 
-export function decrementItemQuantityByOneAction(id: string) {
+export function decrementItemQuantityByOneAction(id: string | undefined) {
   return {
     type: ActionTypes.DECREMENT_ITEM_QUANTITY_BY_ONE,
     payload: {

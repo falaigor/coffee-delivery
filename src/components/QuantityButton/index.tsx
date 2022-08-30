@@ -3,17 +3,23 @@ import { QuantityButtonContainer } from "./styles";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 
-export function QuantityButton() {
-  const { increaseCoffeeQuantityByOne, decreaseCoffeeQuantityByOne } =
+interface QuantityButtonProps {
+  itemId: string | undefined;
+}
+
+export function QuantityButton({ itemId }: QuantityButtonProps) {
+  const { cart, increaseCoffeeQuantityByOne, decreaseCoffeeQuantityByOne } =
     useContext(CartContext);
+
+  const cartCoffee = cart.find((c) => c.coffeeId === itemId);
 
   return (
     <QuantityButtonContainer>
-      <button onClick={() => console.log("decrement")}>
+      <button onClick={() => decreaseCoffeeQuantityByOne(itemId)}>
         <Minus weight="bold" />
       </button>
-      <span>1</span>
-      <button onClick={() => console.log("increment")}>
+      <span>{cartCoffee?.quantity ?? 0}</span>
+      <button onClick={() => increaseCoffeeQuantityByOne(itemId)}>
         <Plus weight="bold" />
       </button>
     </QuantityButtonContainer>

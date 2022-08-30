@@ -24,7 +24,7 @@ export function CartItem() {
               <div>
                 <p>{coffee?.title}</p>
                 <Actions>
-                  <QuantityButton />
+                  <QuantityButton itemId={coffee?.id} />
 
                   <Remove onClick={() => console.log("remove")}>
                     <Trash size={22} /> Remover
